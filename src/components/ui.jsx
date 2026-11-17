@@ -58,9 +58,12 @@ export const STAT_ICONS = {
 };
 
 /** a two-line display headline with the accent full stop */
-export const Headline = ({ as: Tag = "h2", className, lines }) => (
-  <Tag className={className}>
-    <span className="head-line"><span className="hl">{lines[0]}</span></span>
-    <span className="head-line"><span className="hl">{lines[1]}</span><span className="stop" aria-hidden="true">.</span></span>
-  </Tag>
-);
+export const Headline = ({ as: Tag = "h2", className, lines }) => {
+  const stop = <span className="stop" aria-hidden="true">.</span>;
+  return (
+    <Tag className={className}>
+      <span className="head-line"><span className="hl">{lines[0]}</span>{!lines[1] && stop}</span>
+      {lines[1] && <span className="head-line"><span className="hl">{lines[1]}</span>{stop}</span>}
+    </Tag>
+  );
+};
