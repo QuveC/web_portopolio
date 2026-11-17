@@ -50,13 +50,6 @@ export const ICONS = {
   dot: <svg viewBox="0 0 14 14" style={{ width: ".875rem", height: ".875rem" }} aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor" /><circle cx="7" cy="7" r="3" fill="var(--accent)" /></svg>,
 };
 
-export const STAT_ICONS = {
-  flag: <svg viewBox="0 0 31 31"><path d="M6 29V3M6 4h18l-4 6 4 6H6" /></svg>,
-  bars: <svg viewBox="0 0 31 31"><path d="M4 27h23M8 27V17M14 27V10M20 27V14M26 27V5" /></svg>,
-  trophy: <svg viewBox="0 0 31 31"><path d="M9 4h13v8a6.5 6.5 0 0 1-13 0zM9 7H4c0 5 3 7 5.5 7M22 7h5c0 5-3 7-5.5 7M15.5 18.5V24M10 27h11" /></svg>,
-  gauge: <svg viewBox="0 0 31 31"><path d="M4 22a11.5 11.5 0 1 1 23 0M15.5 22l6-8M4 26h23" /></svg>,
-};
-
 /** a two-line display headline with the accent full stop */
 export const Headline = ({ as: Tag = "h2", className, lines }) => {
   const stop = <span className="stop" aria-hidden="true">.</span>;

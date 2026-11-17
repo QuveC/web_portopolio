@@ -4,9 +4,11 @@ import { REDUCED, runScrubs, scroller, setPreFrame } from "./lib/engine.js";
 import Veil from "./components/Veil.jsx";
 import Hero from "./components/Hero.jsx";
 import Season from "./components/Season.jsx";
-import Timeline from "./components/Timeline.jsx";
-import Paddock from "./components/Paddock.jsx";
+import Experience from "./components/Experience.jsx";
+import Education from "./components/Education.jsx";
+import Skills from "./components/Skills.jsx";
 import Projects from "./components/Projects.jsx";
+import CvViewer, { openCv } from "./components/CvViewer.jsx";
 import Certificates from "./components/Certificates.jsx";
 import Footer from "./components/Footer.jsx";
 import { PlateClip } from "./components/ui.jsx";
@@ -54,6 +56,7 @@ export default function App() {
     const onClick = (e) => {
       const a = e.target.closest('a[href^="#"]'); if (!a) return;
       const id = a.getAttribute("href"); if (id.length < 2) return;
+      if (id === "#cv") { e.preventDefault(); openCv(); return; }
       const target = document.querySelector(id); if (!target) return;
       e.preventDefault();
       const top = target.closest(".layer")?.offsetTop ?? target.getBoundingClientRect().top + scrollY;
@@ -81,13 +84,15 @@ export default function App() {
       <div id="asset-errors" ref={errors} aria-live="polite" />
       <PlateClip />
       <Veil />
+      <CvViewer />
       <main>
         <div className="stack" ref={stack}>
           <div className="layer"><div className="layer-inner"><Hero /></div><div className="shade" /></div>
           <div className="layer"><div className="layer-inner"><Season /></div><div className="shade" /></div>
-          <div className="layer last"><Timeline /></div>
+          <div className="layer last"><Experience /></div>
         </div>
-        <Paddock />
+        <Education />
+        <Skills />
         <Projects />
         <Certificates />
         <Footer />

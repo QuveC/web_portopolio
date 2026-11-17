@@ -1,12 +1,13 @@
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { CERTIFICATES, CERT_KINDS, CONFIG } from "../config.js";
-import { $, $$, CFG, REDUCED, checker, contourField, onceInView, rise, split } from "../lib/engine.js";
+import { $, CFG, REDUCED, checker, onceInView, rise } from "../lib/engine.js";
+import { revealTop } from "../lib/reveal.js";
 import Lightbox, { pad } from "./Lightbox.jsx";
-import { Corners, Headline, PlateOutline } from "./ui.jsx";
+import { Headline, PlateOutline } from "./ui.jsx";
 
 const kindLabel = Object.fromEntries(CERT_KINDS);
 
-/* one certificate plate — rises in when it scrolls into view, or right away after a filter change */
+/* one certificate — rises when it scrolls into view, or right away after a filter change */
 function CertCard({ c, n, order, onOpen, onHot }) {
   const ref = useRef(null);
   useLayoutEffect(() => {
@@ -15,26 +16,23 @@ function CertCard({ c, n, order, onOpen, onHot }) {
     return onceInView(el, () => r.play(), "0% 0% -10% 0%");
   }, [order]);
   return (
-    <button ref={ref} type="button" className="cert" onClick={onOpen}
-      onMouseEnter={() => onHot(true, ref.current)} onMouseLeave={() => onHot(false, ref.current)}
-      aria-label={`View certificate: ${c.title}, ${c.issuer}`}>
-      <div className="cert-plate">
-        <div className="cert-fill"><img src={c.img} alt="" loading="lazy" /></div>
-        <PlateOutline />
-        {c.cv && <span className="cert-flag">key certificate</span>}
-        <span className="cert-tag">{kindLabel[c.kind]}</span>
-        <span className="cert-no" aria-hidden="true">{pad(n)}</span>
-      </div>
-      <div className="cert-meta">
+    <article ref={ref} className="item" onMouseEnter={() => onHot(true, ref.current)} onMouseLeave={() => onHot(false, ref.current)}>
+      <button type="button" className="plate-hit" onClick={onOpen} aria-label={`View certificate: ${c.title}, ${c.issuer}`}>
+        <div className="plate contain">
+          <div className="plate-fill"><img src={c.img} alt="" loading="lazy" /></div>
+          <PlateOutline />
+        </div>
+      </button>
+      <div className="meta-block">
+        <span className="meta-line"><span className="n">{pad(n)}</span>{kindLabel[c.kind]}{c.cv && <span className="flag">· listed on cv</span>}</span>
         <b>{c.title}</b>
-        <span>{c.issuer}</span>
-        <small>{[c.date, c.note].filter(Boolean).join(" · ")}</small>
+        <p>{c.issuer}{c.date ? ` — ${c.date}` : ""}. {c.note.charAt(0).toUpperCase() + c.note.slice(1)}.</p>
       </div>
-    </button>
+    </article>
   );
 }
 
-/* 7 · Licenses & certificates */
+/* 8 · Certificates */
 export default function Certificates() {
   const ref = useRef(null), grid = useRef(null);
   const [kind, setKind] = useState("all");
@@ -48,20 +46,8 @@ export default function Certificates() {
 
   useLayoutEffect(() => {
     const el = ref.current;
-    if (el.dataset.armed) return;
-    el.dataset.armed = "1";
+    if (!revealTop(el)) return;
     checker($(".checker", el), "light");
-    contourField($(".contours", el), "rgb(255 255 255 / .06)", el);
-    const heads = $$(".hl", el).map((h) => split(h, { stagger: 110 }));
-    const stop = rise($(".certs-head .stop", el), { y: null, delay: 240 });
-    const intro = split($(".certs-intro", el), { stagger: 30, cfg: CFG.COPY2, gap: 0.22 });
-    const count = rise($(".certs-count", el), { delay: 420 });
-    const fig = split($(".certs-count dd", el), { mode: "letters", stagger: 26, cfg: CFG.FIGURE });
-    const chips = $$(".chip", el).map((c, i) => rise(c, { y: "0.5rem", cfg: CFG.ROW, delay: 520 + i * 60 }));
-    onceInView($(".certs-head", el), () => {
-      heads.forEach((h, i) => h.play(i * 130)); stop.play(); intro.play(2 * 130 + 90);
-      count.play(); fig.play(520); chips.forEach((c) => c.play());
-    });
   }, []);
 
   const onHot = useCallback((on, card) => {
@@ -71,27 +57,28 @@ export default function Certificates() {
   }, []);
 
   return (
-    <section data-certs id="certs" ref={ref} aria-label="Certificates">
+    <section className="ed dark" data-certs id="certs" ref={ref} aria-label="Certificates">
       <canvas className="checker top30" aria-hidden="true" />
-      <canvas className="contours" aria-hidden="true" />
-      <div className="certs-top">
-        <Headline className="certs-head" lines={CONFIG.certs.title} />
-        <div className="certs-aside">
-          <p className="certs-intro">{CONFIG.certs.intro}</p>
-          <div className="certs-count"><Corners /><dl><dd>{pad(CERTIFICATES.length)}</dd><dt><b>certificates</b>courses · competency · events</dt></dl></div>
+      <div className="ed-top">
+        <Headline className="ed-head" lines={CONFIG.certs.title} />
+        <div className="ed-aside">
+          <p className="ed-intro">{CONFIG.certs.intro}</p>
+          <div className="ed-count"><b>{pad(CERTIFICATES.length)}</b><span>certificates · 2021 – 2024</span></div>
         </div>
       </div>
-      <div className="certs-filter" role="group" aria-label="Filter certificates">
-        {CERT_KINDS.map(([k, label]) => (
-          <button key={k} type="button" className="chip" aria-pressed={kind === k} onClick={() => { grid.current.classList.remove("dimming"); setKind(k); }}>
-            <span className="br" aria-hidden="true">[</span>{label}<sup>{pad(counts[k])}</sup><span className="br" aria-hidden="true">]</span>
-          </button>
-        ))}
-      </div>
-      <div className="certs-grid" ref={grid}>
-        {list.map((c, i) => (
-          <CertCard key={`${kind}-${c.img}`} c={c} n={CERTIFICATES.indexOf(c) + 1} order={i} onOpen={() => setOpen(i)} onHot={onHot} />
-        ))}
+      <div className="ed-body">
+        <div className="filters" role="group" aria-label="Filter certificates">
+          {CERT_KINDS.map(([k, label]) => (
+            <button key={k} type="button" className="chip" aria-pressed={kind === k} onClick={() => { grid.current.classList.remove("dimming"); setKind(k); }}>
+              {label}<sup>{pad(counts[k])}</sup>
+            </button>
+          ))}
+        </div>
+        <div className="grid cert-grid" ref={grid}>
+          {list.map((c, i) => (
+            <CertCard key={`${kind}-${c.img}`} c={c} n={CERTIFICATES.indexOf(c) + 1} order={i} onOpen={() => setOpen(i)} onHot={onHot} />
+          ))}
+        </div>
       </div>
       {open != null && <Lightbox items={items} index={open} setIndex={setOpen} onClose={() => setOpen(null)} label="Certificate viewer" />}
     </section>

@@ -95,7 +95,6 @@ export default function Hero() {
                 <dt>{C.now.title}</dt><dd>{C.now.line}</dd>
                 {C.now.date && <dd><time dateTime={C.now.datetime}>{C.now.date}</time></dd>}
               </dl>
-              <svg className="now-mark" viewBox="0 0 78 50" aria-hidden="true"><path d="M2 40 L18 12 L30 30 L44 6 L58 26 L76 18" fill="none" stroke="currentColor" strokeWidth="1.5" /><circle cx="76" cy="18" r="3" fill="var(--accent)" /></svg>
             </div>
             <div className="bpanel"><Corners />
               <p className="eyebrow">Stats</p>
@@ -104,8 +103,8 @@ export default function Hero() {
           </div>
         </div>
         <div className="actions">
-          <a className="trailer" href={C.cv.href} target="_blank" rel="noopener">
-            <svg viewBox="0 0 32 32" style={{ width: "2rem", height: "2rem" }} aria-hidden="true"><circle cx="16" cy="16" r="15.5" fill="none" stroke="currentColor" /><path d="M16 9v12M11 16l5 5 5-5" fill="none" stroke="currentColor" /></svg>
+          <a className="trailer" href={C.cv.href} {...ext(C.cv.href)}>
+            <svg viewBox="0 0 32 32" style={{ width: "2rem", height: "2rem" }} aria-hidden="true"><circle cx="16" cy="16" r="15.5" fill="none" stroke="currentColor" /><path d="M10 16h12M17 11l5 5-5 5" fill="none" stroke="currentColor" /></svg>
             <span><b>{C.cv.label}</b><small>{C.cv.meta}</small></span>
           </a>
           <a className="cta cta--hero" href={C.primaryCta[1]}>
