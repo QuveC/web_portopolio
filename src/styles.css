@@ -532,3 +532,10 @@ img { display:block; }
 }
 /* footer copy sits outside the dark panel, so it needs the on-dark ink explicitly */
 .foot-nav { color:var(--foreground-on-dark); }
+/* phone footer: six nav rows + email need more height than the original layout gave */
+@media (max-width:639px) {
+  [data-footer] { --foot-h:880px; --nav-mid:400px; }
+  .foot-cta { bottom:150px !important; }
+  .foot-social { bottom:224px !important; }
+  .foot-copy { width:calc(100cqw - 48px); }
+}
