@@ -32,7 +32,7 @@ export default function Footer() {
         {C.nav.map(([l, h]) => <a key={h} className="hov" href={h}><span className="nl">{l}</span></a>)}
       </nav>
       <div className="foot-row">
-        <p className="foot-copy">© 2026 {C.first} {C.last}. All rights reserved.</p>
+        <p className="foot-copy"><a className="foot-mail hov" href={`mailto:${C.email}`}>{C.email}</a>© 2026 {C.first} {C.last}. All rights reserved.</p>
         <div className="foot-cta"><Slab label={C.footer.cta[0]} href={C.footer.cta[1]} kind="hollow" w={275} h={50} cut={8.835} /></div>
         <ul className="foot-social">{C.socials.map(([l, h]) => <li key={l}><a className="hov" href={h} target="_blank" rel="noopener">{l}</a></li>)}</ul>
       </div>

@@ -6,6 +6,7 @@ import Hero from "./components/Hero.jsx";
 import Season from "./components/Season.jsx";
 import Timeline from "./components/Timeline.jsx";
 import Paddock from "./components/Paddock.jsx";
+import Projects from "./components/Projects.jsx";
 import Certificates from "./components/Certificates.jsx";
 import Footer from "./components/Footer.jsx";
 import { PlateClip } from "./components/ui.jsx";
@@ -87,6 +88,7 @@ export default function App() {
           <div className="layer last"><Timeline /></div>
         </div>
         <Paddock />
+        <Projects />
         <Certificates />
         <Footer />
       </main>
