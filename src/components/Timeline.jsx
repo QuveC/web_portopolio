@@ -75,8 +75,10 @@ export default function Timeline() {
                   <div className="plate-fill" style={{ clipPath: "url(#plate-clip)" }}><div className="plate-slot">
                     {e.img
                       ? <img src={e.img} alt={`${e.title} — ${e.tag}`} loading="lazy" />
-                      : <div className="plate-art"><b>{e.title}</b><small>{e.tag}</small></div>}
-                  </div></div>
+                      : <div className="plate-art">{e.kind && <i className="plate-kind">{e.kind}</i>}<b>{e.title}</b><small>{e.tag}</small></div>}
+                  </div>
+                  {e.img && <div className="plate-cap"><i className="plate-kind">{e.kind}</i><b>{e.title}</b><small>{e.tag}</small></div>}
+                  </div>
                   <PlateOutline />
                 </Plate>
                 <div className="tl-year">{e.year}</div>

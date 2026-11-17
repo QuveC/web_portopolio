@@ -50,15 +50,21 @@ export const CONFIG = {
   journey: {
     title: ["experience", "& education"],
     // frame: "centre" | "side"; side rows need align "left" | "right"; img (any URL) and href are optional
+    // Chronological, top → bottom, straight from the CV. kind is the eyebrow on the plate.
     entries: [
-      { year: "2022", frame: "side", align: "right", title: "java crud", tag: "certificate · pt 7sky global solution · competent", img: cert("cert-07.jpg") },
-      { year: "2023", frame: "centre", title: "frontend intern", tag: "pt dimensi kreasi nusantara", lead: "Frontend Developer Intern.", copy: "PT Dimensi Kreasi Nusantara · Jul – Dec 2023. Designed mobile application screens in React Native, implemented CRUD features and fixed application bugs.", cw: 284, img: cert("cert-11.png") },
-      { year: "2023", frame: "side", align: "left", title: "laravel", tag: "certificate · ginvo studio · highly competent", img: cert("cert-10.jpg") },
-      { year: "2024", frame: "centre", title: "frontend developer", tag: "contract · pt dimensi kreasi nusantara", lead: "Frontend Developer (Contract).", copy: "PT Dimensi Kreasi Nusantara · Jan – Mar 2024. Sliced designs into web pages, designed layouts, built REST API endpoints and fixed website issues.", cw: 284 },
-      { year: "2024", frame: "side", align: "right", title: "bnsp", tag: "national certification · competent", img: cert("cert-12.jpg") },
-      { year: "2024", frame: "centre", title: "telkom university", tag: "bachelor of informatics", lead: "Telkom University.", copy: "2024 – present. Bachelor of Informatics, Faculty of Informatics.", cw: 260 },
-      { year: "2026", frame: "side", align: "left", title: "teaching assistant", tag: "information systems engineering · since oct 2026" },
-      { year: "2026", frame: "centre", title: "research assistant", tag: "generative ai & software engineering", lead: "Research Assistant.", copy: "Generative AI & Software Engineering, Telkom University · since Jul 2026. Scraping and collecting new data for research.", cw: 284 },
+      { year: "2022", frame: "side", align: "left", kind: "certificate", title: "java crud", tag: "pt 7sky global solution · competent", img: cert("cert-07.jpg") },
+      { year: "2023", frame: "centre", kind: "experience", title: "frontend intern", tag: "pt dimensi kreasi nusantara · 25 jul – 4 dec 2023",
+        lead: "Frontend Developer Intern.", copy: "PT Dimensi Kreasi Nusantara. Designed mobile application screens in React Native, implemented CRUD features and debugged application bugs.", cw: 284 },
+      { year: "2023", frame: "side", align: "right", kind: "certificate", title: "laravel", tag: "ginvo studio · highly competent", img: cert("cert-10.jpg") },
+      { year: "2024", frame: "centre", kind: "experience", title: "frontend developer", tag: "contract · 12 jan – 4 mar 2024",
+        lead: "Frontend Developer (Contract).", copy: "PT Dimensi Kreasi Nusantara. Converted designs into web pages, designed website layouts, built REST API endpoints and fixed website issues.", cw: 284 },
+      { year: "2024", frame: "side", align: "left", kind: "certificate", title: "bnsp", tag: "national certification · competent", img: cert("cert-12.jpg") },
+      { year: "2024", frame: "centre", kind: "education", title: "telkom university", tag: "bachelor of informatics · 2024 – present",
+        lead: "Telkom University.", copy: "Bachelor of Informatics, Faculty of Informatics. Focus on full stack development — React JS, FastAPI and PostgreSQL.", cw: 260 },
+      { year: "2026", frame: "centre", kind: "experience", title: "research assistant", tag: "generative ai & software eng. · since 13 jul 2026",
+        lead: "Research Assistant.", copy: "Generative AI & Software Engineering, Telkom University. Scrape and collect new data for research use.", cw: 284 },
+      { year: "2026", frame: "centre", kind: "experience", title: "teaching assistant", tag: "information systems eng. · since 6 oct 2026",
+        lead: "Teaching Assistant.", copy: "Information Systems Engineering, Telkom University. Monitor and review students' final project progress across classes.", cw: 284 },
     ],
   },
   featured: {
