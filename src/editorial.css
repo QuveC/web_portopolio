@@ -143,3 +143,52 @@
 [data-edu], [data-projects] { border-top:1px solid var(--rule); }
 .skill-items > span { white-space:nowrap; }
 .skill-items { display:flex; flex-wrap:wrap; row-gap:.1em; }
+
+/* ---------- experience: vertical panels, one open at a time ---------- */
+.ed.xp { padding-bottom:0; }
+.xp-stage { position:relative; z-index:20; margin:0 calc(var(--G) * -1); height:max(min(100svh, 62cqw), 640px); border-top:1px solid var(--rule); overflow:hidden; }
+.xp-stage > .contours { z-index:0; }
+.xp-head { position:absolute; z-index:5; left:0; right:0; top:max(4cqw, 40px); display:flex; flex-direction:column; align-items:center; gap:1.25rem; padding:0 var(--G); text-align:center; pointer-events:none; }
+.xp-head .head-line { justify-content:center; }
+.xp-head .head-line .split { justify-content:center; }
+.xp-head .ed-head { font-size:max(5.2cqw, 44px); }
+.xp-head .ed-intro { max-width:30em; }
+.xp-panels { position:relative; z-index:2; display:flex; height:100%; }
+.xp-panel { position:relative; flex:1 1 0; min-width:0; overflow:hidden; cursor:pointer; border-left:1px solid var(--rule); outline:none;
+  transition:flex-grow 900ms var(--ease-plate); }
+.xp-panel:first-child { border-left:0; }
+.xp-panel.is-open { flex-grow:3.2; cursor:default; }
+.xp-panel:focus-visible { box-shadow:inset 0 0 0 1px var(--accent); }
+.xp-shade { position:absolute; inset:0; background:var(--surface-black); opacity:.62; transition:opacity 700ms var(--ease-plate); pointer-events:none; }
+.xp-panel.is-open .xp-shade { opacity:0; }
+.xp-panel:not(.is-open):hover .xp-shade { opacity:.45; }
+
+/* collapsed rail: number up top, role reading bottom-to-top */
+.xp-rail { position:absolute; inset:auto 0 max(2.5cqw, 28px) 0; display:flex; flex-direction:column; align-items:center; gap:1.25rem; transition:opacity 500ms var(--ease-plate); }
+.xp-tag { writing-mode:vertical-rl; transform:rotate(180deg); font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:max(1.5cqw, 18px); line-height:1; white-space:nowrap; }
+.xp-n { font-size:var(--type-eyebrow); letter-spacing:.08em; color:var(--accent); font-weight:700; }
+.xp-panel.is-open .xp-rail { opacity:0; }
+
+/* open body: fixed width so text doesn't reflow while the panel grows */
+.xp-body { position:absolute; left:0; bottom:0; width:min(max(36cqw, 26rem), 100cqw); padding:0 max(2.5cqw, 28px) max(2.5cqw, 28px); display:flex; flex-direction:column; gap:1.5rem;
+  opacity:0; transform:translateY(1.25rem); transition:opacity 500ms var(--ease-plate), transform 700ms var(--ease-plate); pointer-events:none; }
+.xp-panel.is-open .xp-body { opacity:1; transform:none; transition-delay:260ms; pointer-events:auto; }
+.xp-year { font-family:var(--font-display); font-weight:700; line-height:.8; font-size:max(10cqw, 88px); color:transparent; -webkit-text-stroke:1px var(--accent); letter-spacing:-.02em; }
+.xp-copy { display:flex; flex-direction:column; gap:.9rem; padding-top:1.5rem; border-top:1px solid var(--rule); }
+.xp-copy .row-dates .xp-n { margin-right:1em; }
+.xp-copy .row-sub { margin-top:0; }
+.xp-title { font-family:var(--font-display); font-weight:700; text-transform:uppercase; line-height:.92; font-size:max(3.2cqw, 30px); color:var(--accent); }
+.xp-copy .row-points { margin-top:.4rem; max-width:32em; }
+
+/* phones & small tablets: stack, everything open */
+@media (max-width:767px) {
+  .xp-stage { height:auto; margin:0 calc(var(--G) * -1); }
+  .xp-head { position:relative; top:auto; align-items:flex-start; text-align:left; padding:max(10cqw, 48px) var(--G); }
+  .xp-head .head-line, .xp-head .head-line .split { justify-content:flex-start; }
+  .xp-panels { flex-direction:column; height:auto; }
+  .xp-panel, .xp-panel.is-open { flex:none; cursor:default; border-left:0; border-top:1px solid var(--rule); }
+  .xp-shade, .xp-rail { display:none; }
+  .xp-body { position:relative; width:auto; opacity:1; transform:none; padding:2rem var(--G) 2.5rem; pointer-events:auto; }
+  .xp-year { font-size:72px; }
+}
+@media (prefers-reduced-motion:reduce) { .xp-panel, .xp-shade, .xp-body, .xp-rail { transition:none; } }
