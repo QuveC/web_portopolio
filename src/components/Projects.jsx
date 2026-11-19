@@ -92,7 +92,7 @@ export default function Projects() {
         <Headline className="ed-head" lines={CONFIG.projects.title} />
         <div className="ed-aside">
           <p className="ed-intro">{CONFIG.projects.intro}</p>
-          <div className="ed-count"><b>{pad(PROJECTS.length)}</b><span>projects · web · mobile · ai</span></div>
+          <div className="ed-count"><b>{pad(PROJECTS.length)}</b><span>projects · web · mobile · ai · ui/ux</span></div>
         </div>
       </div>
       <div className="ed-body">
