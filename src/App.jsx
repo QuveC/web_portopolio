@@ -68,6 +68,7 @@ export default function App() {
     const onError = (e) => {
       if (e.target.tagName !== "IMG") return;
       const d = document.createElement("div"); d.textContent = `Failed to load: ${e.target.src}`; errors.current.append(d);
+      console.log()
     };
     document.addEventListener("error", onError, true);
 
